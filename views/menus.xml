@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_hotel_root" name="Hotel Management" sequence="1"/>
+
+    <menuitem id="menu_booking" name="Bookings"
+              parent="menu_hotel_root"
+              action="action_booking" sequence="10"/>
+
+    <menuitem id="menu_hotel" name="Hotels"
+              parent="menu_hotel_root"
+              action="action_hotel" sequence="20"/>
+
+    <menuitem id="menu_room" name="Rooms"
+              parent="menu_hotel_root"
+              action="action_room" sequence="30"/>
+
+    <menuitem id="menu_feature" name="Features"
+              parent="menu_hotel_root"
+              action="action_feature" sequence="40"/>
+
+</odoo>
