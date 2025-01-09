@@ -1,66 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Booking List View -->
-    <record id="view_booking_list" model="ir.ui.view">
-        <field name="name">hotel.booking.list</field>
-        <field name="model">hotel.booking</field>
-        <field name="arch" type="xml">
-            <list>
-                <field name="booking_code"/>
-                <field name="room_id"/>
-                <field name="hotel_id"/>
-                <field name="guest_name"/>
-                <field name="check_in_date"/>
-                <field name="check_out_date"/>
-                <field name="booking_status"/>
-            </list>
-        </field>
-    </record>
+    <data>
+        <!-- Booking List View -->
+        <record id="view_booking_list" model="ir.ui.view">
+            <field name="name">hotel.booking.list</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="booking_code"/>
+                    <field name="room_id"/>
+                    <field name="hotel_id"/>
+                    <field name="guest_name"/>
+                    <field name="check_in_date"/>
+                    <field name="check_out_date"/>
+                    <field name="booking_status"/>
+                </list>
+            </field>
+        </record>
 
-    <!-- Booking Form View -->
-    <record id="view_booking_form" model="ir.ui.view">
-        <field name="name">hotel.booking.form</field>
-        <field name="model">hotel.booking</field>
-        <field name="arch" type="xml">
-            <form>
-                <sheet>
-                    <group>
-                        <field name="booking_code"/>
-                        <field name="room_id"/>
-                        <field name="hotel_id"/>
-                        <field name="guest_name"/>
-                        <field name="guest_contact"/>
-                        <field name="check_in_date"/>
-                        <field name="check_out_date"/>
-                        <field name="total_nights"/>
-                        <field name="total_amount"/>
-                    </group>
-                    <group>
-                        <field name="booking_status"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
+        <!-- Booking Form View -->
+        <record id="view_booking_form" model="ir.ui.view">
+            <field name="name">hotel.booking.form</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="booking_code"/>
+                            <field name="room_id"/>
+                            <field name="hotel_id"/>
+                            <field name="guest_name"/>
+                            <field name="guest_contact"/>
+                            <field name="check_in_date"/>
+                            <field name="check_out_date"/>
+                            <field name="total_nights"/>
+                            <field name="total_amount"/>
+                        </group>
+                        <group>
+                            <field name="booking_status"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-    <!-- Booking Search View -->
-    <record id="view_booking_search" model="ir.ui.view">
-        <field name="name">hotel.booking.search</field>
-        <field name="model">hotel.booking</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="booking_code"/>
-                <field name="guest_name"/>
-                <field name="room_id"/>
-            </search>
-        </field>
-    </record>
+        <!-- Booking Search View -->
+        <record id="view_booking_search" model="ir.ui.view">
+            <field name="name">hotel.booking.search</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_code"/>
+                    <field name="guest_name"/>
+                    <field name="room_id"/>
+                </search>
+            </field>
+        </record>
 
-    <record id="action_booking" model="ir.actions.act_window">
-        <field name="name">Bookings</field>
-        <field name="res_model">hotel.booking</field>
-        <field name="view_mode">list,form</field>
-<!--        <field name="context">{}</field>-->
-    </record>
-
+        <record id="action_booking" model="ir.actions.act_window">
+            <field name="name">Bookings</field>
+            <field name="res_model">hotel.booking</field>
+            <field name="view_mode">list,form</field>
+            <!--        <field name="context">{}</field>-->
+        </record>
+    </data>
 </odoo>
