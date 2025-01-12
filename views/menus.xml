@@ -18,5 +18,10 @@
         <menuitem id="menu_feature" name="Features"
                   parent="menu_hotel_root"
                   action="action_feature" sequence="40"/>
+
+        <menuitem id="menu_booking_pending" name="New Booking"
+                  parent="menu_hotel_root"
+                  action="action_booking_pending" sequence="40"/>
+
     </data>
 </odoo>

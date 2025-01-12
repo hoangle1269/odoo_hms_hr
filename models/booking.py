@@ -2,12 +2,13 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from datetime import timedelta
 
+
 class HotelBooking(models.Model):
     _name = 'hotel.booking'
     _description = 'Room Booking'
     _order = 'check_in_date desc'
 
-    booking_code = fields.Char(string='Booking Code', required=True, readonly=True)
+    booking_code = fields.Char(string='Booking Code', readonly=True)
     room_id = fields.Many2one('hotel.room', string='Room', required=True)
     hotel_id = fields.Many2one('hotel.hotel', related='room_id.hotel_id', store=True)
     booking_date = fields.Date(string='Booking Date', default=fields.Date.context_today)
@@ -23,10 +24,17 @@ class HotelBooking(models.Model):
         ('checked_in', 'Checked In'),
         ('checked_out', 'Checked Out'),
         ('cancelled', 'Cancelled')
-    ], string='Status', default='new')
+    ], string='Booking Status', default='new')
     total_nights = fields.Integer(string='Total Nights', compute='_compute_total_nights', store=True)
     total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True)
 
+    @api.model
+    def _auto_cancel_draft_bookings(self):
+        draft_bookings = self.search([
+            ('booking_status', '=', 'draft'),
+            ('create_date', '<', fields.Datetime.now() - timedelta(hours=24))
+        ])
+        draft_bookings.write({'booking_status': 'cancelled'})
 
     def unlink(self):
         if not self.env.user.has_group('hotel.group_hotel_manager'):
@@ -76,22 +84,33 @@ class HotelBooking(models.Model):
 
     def action_confirm(self):
         self.write({'booking_status': 'confirmed'})
-
-    def action_cancel(self):
-        self.write({'booking_status': 'cancelled'})
+        self._send_status_update_email()
 
     def action_check_in(self):
         self.write({'booking_status': 'checked_in'})
         self.room_id.write({'room_status': 'occupied', 'last_rented_date': fields.Date.context_today(self)})
+        self._send_status_update_email()
 
     def action_check_out(self):
         self.write({'booking_status': 'checked_out'})
         self.room_id.write({'room_status': 'available'})
+        self._send_status_update_email()
+
+    def _send_status_update_email(self):
+        # Lấy người quản lý của khách sạn
+        manager = self.hotel_id.manager_id
+        if manager and manager.user_id:
+            template = self.env.ref('hotel.booking_status_update_email_template')
+            self.env['mail.template'].browse(template.id).send_mail(self.id, force_send=True)
 
     @api.model
-    def _auto_cancel_draft_bookings(self):
-        draft_bookings = self.search([
-            ('booking_status', '=', 'draft'),
-            ('create_date', '<', fields.Datetime.now() - timedelta(hours=24))
-        ])
-        draft_bookings.write({'booking_status': 'cancelled'})
+    def _send_status_update_notification(self, booking):
+        message = f"Booking {booking.booking_code} status updated to {booking.booking_status}."
+        booking.message_post(body=message)
+
+    def action_booking_approve(self):
+        for record in self:
+            record.write({'booking_status': 'confirmed'})
+        # if record.booking_status == 'new':
+        # else:
+        #     raise ValidationError("Only bookings in 'New' status can be approved.")

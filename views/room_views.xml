@@ -13,6 +13,7 @@
                     <field name="room_price"/>
                     <field name="room_status"/>
                     <field name="room_active"/>
+                    <field name="last_rented_date"/>
                 </list>
             </field>
         </record>
@@ -31,10 +32,19 @@
                             <field name="room_price"/>
                             <field name="feature_ids"/>
                             <field name="room_status"/>
+                            <field name="last_rented_date"/>
                         </group>
                         <group>
                             <field name="room_active"/>
                         </group>
+                        <notebook>
+                            <page string="Features">
+                                <field name="feature_ids"/>
+                            </page>
+                            <page string="Bookings">
+                                <field name="booking_ids"/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>

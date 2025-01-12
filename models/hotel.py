@@ -4,6 +4,8 @@ from odoo.exceptions import ValidationError
 class Hotel(models.Model):
     _name = 'hotel.hotel'
     _description = 'Hotel Information'
+    _rec_name = 'hotel_name'
+    _inherit = ['mail.thread']
 
     hotel_code = fields.Char(string='Hotel Code', required=True)
     hotel_name = fields.Char(string='Hotel Name', required=True)
@@ -33,3 +35,4 @@ class Hotel(models.Model):
     def _compute_total_rooms(self):
         for hotel in self:
             hotel.number_of_rooms = len(hotel.room_ids)
+
