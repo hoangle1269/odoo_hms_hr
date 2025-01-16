@@ -10,7 +10,7 @@
         - Booking System
         - Feature Management
     """,
-    'depends': ['base', 'mail', 'hr'],
+    'depends': ['base', 'mail', 'hr', 'sale'],
     'data': [
         'security/hotel_security.xml',
         'security/ir.model.access.csv',
@@ -24,6 +24,8 @@
         'views/feature_views.xml',
         'views/booking_views.xml',
         'views/booking_new.xml',
+        'views/hotel_payment_views.xml',
+        'views/payment_views.xml',
         'views/menus.xml',
         'views/email_template.xml',
         'reports/hotel_reports.xml',

@@ -37,7 +37,25 @@
                         <group>
                             <field name="hotel_active"/>
                         </group>
+                        <notebook>
+                            <page string="Rooms" name="rooms">
+                                <field name="room_ids" nolabel="1">
+                                    <list string="Rooms" editable="bottom">
+                                        <field name="room_code"/>
+                                        <field name="room_name"/>
+                                        <field name="bed_type"/>
+                                        <field name="room_price"/>
+                                        <field name="room_status"/>
+                                        <field name="room_active"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </form>
             </field>
         </record>
